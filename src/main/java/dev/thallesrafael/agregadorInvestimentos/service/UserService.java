@@ -30,8 +30,8 @@ public class UserService {
     return userSaved.getId();
   }
 
-  public Optional<User> getUserById(String id){
-    return userRepository.findById(UUID.fromString(id));
+  public Optional<User> getUserById(String string){
+    return userRepository.findById(UUID.fromString(string));
   } 
 
   public List<User> getAllUsers(){
