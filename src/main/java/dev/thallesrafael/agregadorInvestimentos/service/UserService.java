@@ -3,13 +3,21 @@ package dev.thallesrafael.agregadorInvestimentos.service;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import dev.thallesrafael.agregadorInvestimentos.controller.CreateUserDTO;
-import dev.thallesrafael.agregadorInvestimentos.controller.UpdateUserDTO;
+import dev.thallesrafael.agregadorInvestimentos.controller.dto.CreateAccountDto;
+import dev.thallesrafael.agregadorInvestimentos.controller.dto.CreateUserDTO;
+import dev.thallesrafael.agregadorInvestimentos.controller.dto.UpdateUserDTO;
+import dev.thallesrafael.agregadorInvestimentos.entity.Account;
+import dev.thallesrafael.agregadorInvestimentos.entity.BillingAddress;
 import dev.thallesrafael.agregadorInvestimentos.entity.User;
+import dev.thallesrafael.agregadorInvestimentos.repository.AccountRepository;
+import dev.thallesrafael.agregadorInvestimentos.repository.BillingAddressRepository;
 import dev.thallesrafael.agregadorInvestimentos.repository.UserRepository;
 
 @Service
@@ -17,6 +25,12 @@ public class UserService {
 
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private AccountRepository accountRepository;
+
+  @Autowired
+  private BillingAddressRepository billingAddressRepository;
 
 
   public UUID createUser(CreateUserDTO user){
@@ -57,6 +71,31 @@ public class UserService {
       userRepository.save(userToUpdate);
     }
     return null;
+  }
+
+  public void createAccount(String id, CreateAccountDto createAccountDto) {
+    User user = userRepository.findById(UUID.fromString(id))
+               .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)); 
+    //DTO to Entity
+    var account = new Account(
+      UUID.randomUUID(),
+      createAccountDto.description(),
+      user,
+      null,
+      new ArrayList<>()
+    );
+
+    var accoutnCreated = accountRepository.save(account);
+
+    var billingAddress = new BillingAddress(
+      accoutnCreated.getId(),
+      createAccountDto.street(),
+      createAccountDto.number(),
+      account
+    );
+
+    billingAddressRepository.save(billingAddress);
+
   }
   
 }

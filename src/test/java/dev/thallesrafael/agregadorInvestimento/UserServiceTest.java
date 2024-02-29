@@ -26,8 +26,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import dev.thallesrafael.agregadorInvestimentos.controller.CreateUserDTO;
-import dev.thallesrafael.agregadorInvestimentos.controller.UpdateUserDTO;
+import dev.thallesrafael.agregadorInvestimentos.controller.dto.CreateUserDTO;
+import dev.thallesrafael.agregadorInvestimentos.controller.dto.UpdateUserDTO;
 import dev.thallesrafael.agregadorInvestimentos.entity.User;
 import dev.thallesrafael.agregadorInvestimentos.repository.UserRepository;
 import dev.thallesrafael.agregadorInvestimentos.service.UserService;
@@ -197,7 +197,7 @@ public class UserServiceTest {
             // Assert
             assertEquals(user.getId(), uuidCaptor.getValue());
 
-            var userCaptured = userCaptor.getValue();
+            var userCaptured = userCaptor.getValue(); 
 
             assertEquals(updateUserDto.username(), userCaptured.getUsername());
             assertEquals(updateUserDto.password(), userCaptured.getPassword());
