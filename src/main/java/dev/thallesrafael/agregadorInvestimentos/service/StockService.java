@@ -22,7 +22,7 @@ import dev.thallesrafael.agregadorInvestimentos.repository.BillingAddressReposit
 import dev.thallesrafael.agregadorInvestimentos.repository.UserRepository;
 
 @Service
-public class UserService {
+public class StockService {
 
   @Autowired
   private UserRepository userRepository;

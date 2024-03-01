@@ -3,6 +3,8 @@ package dev.thallesrafael.agregadorInvestimentos.entity;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,6 +29,7 @@ public class Account {
   @Column(name = "description")
   private String description;
 
+  @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "user_id")
   private User user;
