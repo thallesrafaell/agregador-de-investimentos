@@ -29,7 +29,7 @@ public class Account {
   @Column(name = "description")
   private String description;
 
-  @JsonIgnore
+  
   @ManyToOne
   @JoinColumn(name = "user_id")
   private User user;
@@ -37,6 +37,10 @@ public class Account {
   @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
   @PrimaryKeyJoinColumn
   private BillingAddress billingAddress;
+
+  
+
+
 
   @OneToMany(mappedBy = "account")
   private List<AccountStock> accountStocks;
@@ -104,6 +108,26 @@ public class Account {
 
   public void setUser(User user) {
     this.user = user;
+  }
+
+  public List<AccountStock> getAccountStocks() {
+    return accountStocks;
+  }
+
+
+
+  public void setAccountStocks(List<AccountStock> accountStocks) {
+    this.accountStocks = accountStocks;
+  }
+
+  public BillingAddress getBillingAddress() {
+    return billingAddress;
+  }
+
+
+
+  public void setBillingAddress(BillingAddress billingAddress) {
+    this.billingAddress = billingAddress;
   }
   
 }
